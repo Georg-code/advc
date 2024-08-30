@@ -15,28 +15,32 @@ int main()
     int total = 0;
     while (getline(InputFile, myText))
     {
-        string line;
+
         char current;
         vector<char> numbers = {};
         int lineval;
 
-        map<string, int> replaceMap = {{"one", 1}, {"two", 2}, {"three", 3}, {"four", 4}, {"five", 5}, {"six", 6}, {"eight", 8}, {"nine", 9}};
+        map<string, string> replaceMap = {{"one", "on1e"}, {"two", "tw2o"}, {"three", "thr3e"}, {"four", "fo4ur"}, {"five", "fi5ve"}, {"six", "si6x"}, {"seven", "sev7en"}, {"eight", "ei8ght"}, {"nine", "ni9ne"}};
 
-        for (int i = 0; i <= myText.length() - 1; i++)
+        for (uint i = 0; i <= myText.length(); i++)
         {
-
-            string subText = myText.substr(0, myText.length());
-
+            string subText = myText.substr(0, i);
             for (auto j : replaceMap)
             {
 
                 if (subText.find(j.first) != std::string::npos)
                 {
+
+                    size_t pos = subText.find(j.first);
+                    if (pos != std::string::npos)
+                    {
+                        myText.replace(pos, j.first.length(), j.second);
+                    }
                 }
             }
         }
 
-        for (int i = 0; i < myText.length(); i++)
+        for (uint i = 0; i < myText.length(); i++)
         {
             current = myText[i];
             if (isdigit(current))
@@ -47,6 +51,8 @@ int main()
 
         lineval = (numbers.front() - '0') * 10 + (numbers.back() - '0');
         total += lineval;
+
+        cout << myText << " " << lineval << endl;
     }
     cout << total << endl;
 
